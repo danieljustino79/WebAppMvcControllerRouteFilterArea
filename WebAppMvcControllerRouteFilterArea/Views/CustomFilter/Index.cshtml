@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Filter</h2>
+<p>Register</p>
+Global.asax
+<pre>public class MvcApplication : System.Web.HttpApplication {
+    protected void Application_Start() {
+        FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+    }
+}</pre>
+<hr />
+RouteConfig.cs
+<pre>public class FilterConfig {
+    public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
+        filters.Add(new HandleErrorAttribute());
+    }
+}</pre>
+<hr />
+<h3>Examples</h3>
+<p>One with Authorize @Html.ActionLink("test", "Restrict", "Home")</p>
+<pre>public class HomeController : Controller {
+    
+    public ActionResult Index() {
+        return View();
+    }
+
+    [Authorize]
+    public void Restrict() {
+        ...
+    }
+}</pre>
+<hr />
+<p>All with Authorize and one exception allowed</p>
+<pre>[Authorize]
+public class AccountController : Controller {
+    [AllowAnonymous]
+    public ActionResult Login() {
+        return View();
+    }
+}</pre>
+<hr />
+<p>Cache in page @Html.ActionLink("test", "DateTimeHourMinuteSecond")</p>
+<pre>public class DataController : Controller {
+    [OutputCache(Duration=10)]
+    public string Index() {
+        return DateTime.Now.ToString("T");
+    }
+}</pre>
+<hr />
+<p>Custom Filter @Html.ActionLink("here", "Custom")</p>
+<pre>[MyCustomFilterByAction]
+public ActionResult Index() {
+    return View();
+}</pre>
+<hr />
+<p>Types of filters:</p>
+<ol><li>Authorization filters – Implements the IAuthorizationFilter, authentication and authorization</li>
+    <li>Action filters – Implements the IActionFilter, modify the view data</li>
+    <li>Result filters – Implements the IResultFilter, modify a view result right before the view is rendered to the browser.</li>
+    <li>Exception filters – Implements the IExceptionFilter, handle errors raised by either your controller actions or controller action results. 
+    You also can use exception filters to log errors.</li></ol>
+
+
+
+
+
+
+
+
+@*<p>Register</p>
+Global.asax
+<pre>public class MvcApplication : System.Web.HttpApplication {
+    protected void Application_Start() {
+        FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+    }
+}</pre>
+<hr />
+RouteConfig.cs
+<pre>public class FilterConfig {
+    public static void RegisterGlobalFilters(GlobalFilterCollection filters) {
+        filters.Add(new HandleErrorAttribute());
+    }
+}</pre>
+<hr />
+<p>Examples</p>
+<pre>[Authorize]
+public class AccountController : Controller {
+    [AllowAnonymous]
+    public ActionResult Login() {
+        return View();
+    }
+}</pre>
+<pre>public class DataController : Controller
+     {
+          [OutputCache(Duration=10)]
+          public string Index()
+          {
+               return DateTime.Now.ToString("T");
+          }
+     }</pre>
+<p>Tipos</p>
+<ul><li>Authorization implementa a interface IAuthorizationFilter, faz a segurança sobre os métodos action, tais como autenticação ou validação do request. 
+    A classe AuthorizeAttribute e a RequireHttpsAttribute são filtros que executam antes de qq outro filtro.</li>
+    <li>Action e Result representado pela classe ActionFilterAttribute : FilterAttribute, IActionFilter, IResultFilter<br />
+        Implementa 4 métodos:
+        <ol>
+            <li>OnActionExecuting(ActionExecutingContext filterContext); exec-1</li>
+            <li>OnActionExecuted(ActionExecutedContext filterContext); exec-2</li>
+            <li>OnResultExecuting(ResultExecutingContext filterContext); exec-3</li>
+            <li>OnResultExecuted(ResultExecutedContext filterContext); exec after render page</li>
+        </ol>
+        <p>MyCustomFilterByAction.cs</p>
+    <pre>public class MyCustomFilterByAction : ActionFilterAttribute {
+    public override void OnActionExecuting(ActionExecutingContext filterContext) {
+        ...
+    }
+    public override void OnActionExecuted(ActionExecutedContext filterContext) {
+        ...
+    }
+
+    public override void OnResultExecuting(ResultExecutingContext filterContext) {
+        ...
+    }
+    public override void OnResultExecuted(ResultExecutedContext filterContext) {
+        ...
+    }
+}</pre>
+        <p>MyCustomFilterController.cs</p>
+    <pre>public class MyCustomFilterController : Controller {
+
+    [MyCustomFilterByAction]
+    public ActionResult Index() {
+        return View();
+    }
+}</pre>
+    A DataAnnotation [MyCustomFilterByAction] tem o mesmo nome da classe de filtro.<br />
+    Obs: metodos da inteface IActionFilter atuam sobre qualquer Action metodo. 
+    Tem a função de inspecionar o valor de retorno e cancelar execução do método se necessário.
+    <br />
+    Metodos da interface IResultFilter atuam somente sobre Action metodos com retorno ActionResult.
+    Tem a função de modificar a responta HTTP.<br />
+    LOG: <br />
+    @{
+        foreach (var item in ViewBag.log)
+        {
+            <text>@item</text><br />
+        }
+    }
+    </li>
+    <li>Authorization implementa a interface IAuthorizationFilter, faz a segurança sobre os métodos action, 
+    tais como autenticação ou validação do request. A classe AuthorizeAttribute e a RequireHttpsAttribute são filtros que executam antes de qq outro filtro.</li>
+    <li>Exception implementa IExceptionFilter e executa se uma exceção não tratada ocorrer. 
+    Usada p/ fazer log ou capturar erros não tratados. (HandleErrorAttribute class)</li>
+</ul>
+<p>Filtros são geralmente aplicados na Controller (class) e Action (method) por DataAnnotation</p>
+
+
+<hr />
+<p>Authorize (DataAnnotation) é uma classe (class AuthorizeAttribute : FilterAttribute, IAuthorizationFilter) que pertence ao namespace System.Web.Mvc.</p>*@
+

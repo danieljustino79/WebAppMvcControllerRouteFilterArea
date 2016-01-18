@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Custom";
+}
+
+<h2>Action</h2>
+<li>
+    Action e Result representado pela classe ActionFilterAttribute : FilterAttribute, IActionFilter, IResultFilter<br />
+    Implementa 4 métodos:
+    <ol>
+        <li>OnActionExecuting(ActionExecutingContext filterContext); exec-1</li>
+        <li>OnActionExecuted(ActionExecutedContext filterContext); exec-2</li>
+        <li>OnResultExecuting(ResultExecutingContext filterContext); exec-3</li>
+        <li>OnResultExecuted(ResultExecutedContext filterContext); exec after render page</li>
+    </ol>
+    <p>MyCustomFilterByAction.cs</p>
+    <pre>public class MyCustomFilterByAction : ActionFilterAttribute {
+    public override void OnActionExecuting(ActionExecutingContext filterContext) {
+        ...
+    }
+    public override void OnActionExecuted(ActionExecutedContext filterContext) {
+        ...
+    }
+    public override void OnResultExecuting(ResultExecutingContext filterContext) {
+        ...
+    }
+    public override void OnResultExecuted(ResultExecutedContext filterContext) {
+        ...
+    }
+}</pre>
+    <p>MyCustomFilterController.cs</p>
+    <pre>public class MyCustomFilterController : Controller {
+    [MyCustomFilterByAction]
+    public ActionResult Index() {
+        return View();
+    }
+}</pre>
+    A DataAnnotation [MyCustomFilterByAction] tem o mesmo nome da classe de filtro.<br />
+    Obs: metodos da inteface IActionFilter atuam sobre qualquer Action metodo.
+    Tem a função de inspecionar o valor de retorno e cancelar execução do método se necessário.
+    <br />
+    Metodos da interface IResultFilter atuam somente sobre Action metodos com retorno ActionResult.
+    Tem a função de modificar a responta HTTP.<br />
+    LOG: <br />
+    @{
+        foreach (var item in ViewBag.log)
+        {
+            <text>@item</text><br />
+        }
+    }
+</li>

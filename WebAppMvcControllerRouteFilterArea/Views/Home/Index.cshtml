@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+<h3>We suggest the following:</h3>
+<ol class="round">
+    <li class="one">
+        <h5>Route</h5>
+        A route table is created in the application's Global.asax file. 
+        The Global.asax file is a special file that contains event handlers for ASP.NET application lifecycle events. 
+        The route table is created during the Application Start event.<br />
+        @Html.ActionLink("Route", "Index", "Route")
+    </li>
+
+    <li class="two">
+        <h5>Filter</h5>
+        Filters are classes that run before or after the execution of an action method Controller.
+        Types of filters (Authorization, Action, Result ou Response e Exception)<br />
+        @Html.ActionLink("Filter", "Index", "CustomFilter")
+    </li>
+
+    <li class="three">
+        <h5>Area</h5>
+        <img src="~/Images/areas.png" style="float: right;" />
+        Directory in root of project SolutionName/ProjectName/Areas/Blog/... With an own structure.
+        <br />
+        @Html.ActionLink("Area", "Index", "AreaDefined")
+        
+        
+    </li>
+</ol>

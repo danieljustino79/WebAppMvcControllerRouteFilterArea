@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Area</h2>
+<img src="~/Images/areas.png" style="float: right;" />
+source: https://msdn.microsoft.com/pt-br/library/ee671793(v=vs.100).aspx
+
+<p>BlogAreaRegistration.cs</p>
+<pre>public class BlogAreaRegistration : AreaRegistration {
+    public override string AreaName {
+        get { return "Blog"; }
+    }
+
+    public override void RegisterArea(AreaRegistrationContext context) {
+        context.MapRoute(
+            "Blog_default",
+            "Blog/{controller}/{action}/{id}",
+            new { action = "Index", id = UrlParameter.Optional }
+        );
+    }
+}</pre>
+<hr />
+<p>Global.asax</p>
+<pre>protected void Application_Start() {
+    AreaRegistration.RegisterAllAreas();
+}</pre>
+<hr />
+<p>Change between areas: defined area in RouteValues<br />
+    @@Html.ActionLink("Blog DashBoard AddPost", "AddPost", "DashBoard", new { area = "blog" }, null)</p>
+@Html.ActionLink("Blog DashBoard AddPost", "AddPost", "DashBoard", new { area = "blog" }, null)

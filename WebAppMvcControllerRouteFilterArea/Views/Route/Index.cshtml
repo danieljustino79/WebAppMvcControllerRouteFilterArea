@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+Global.asax
+<pre>public class MvcApplication : System.Web.HttpApplication {
+    protected void Application_Start() {
+        RouteConfig.RegisterRoutes(RouteTable.Routes);
+    }
+}</pre>
+<hr />
+RouteConfig.cs
+<pre>public class RouteConfig {
+    public static void RegisterRoutes(RouteCollection routes) {
+        routes.MapRoute(
+            name: "Default",
+            url: "{controller}/{action}/{id}",
+            defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+        );
+    }
+}</pre>
+<hr />
+<p>The default route table contains a single route (named Default). 
+    The Default route maps the first segment of a URL to a controller name, 
+    the second segment of a URL to a controller action, and the third segment to a parameter named id.</p>
+<p>/Home/Index/3</p>
+<p>controller = Home<br />action = Index<br />id = 3</p>
+<p>When you request the URL /Home/Index/3, the following code is executed: HomeController.Index(3)</p>
+<p>public class HomeController : Controller {
+    public ActionResult Index(string id) {
+        return View();
+    }
+}</p>
